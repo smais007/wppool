@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WPPOOL Index</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+      integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+      integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      #background-image {
+        background-color: #2042b6;
+        background-image: url("../assets/images/dots.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 34.5rem;
+        height: 36.125rem;
+        z-index: 10;
+      }
+      #background-rectangle {
+        background-image: url("./assets/icons/retangel.svg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 34.5rem;
+        height: 36.125rem;
+        z-index: 10;
+      }
+
+      #chart-container {
+        width: 80%;
+        margin: auto;
+      }
+      .tabs {
+        display: flex;
+      }
+      .tabs ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        border-radius: 14px;
+        background: #eff3f6;
+      }
+      .tabs ul li {
+        padding: 10px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      .tabs ul li.active {
+        background-color: #2042b6;
+        font-weight: normal;
+        color: white;
+      }
+      .tabs-content > div {
+        display: none;
+        padding: 10px;
+      }
+      .tabs-content > div.active {
+        display: block;
+      }
+      /* Carosel */
+      .owl-carousel {
+        position: relative;
+        background: url("assets/images/slider-bg.png") no-repeat right;
+        background-size: contain;
+        height: 500px;
+      }
+      /* Basic styling for carousel items */
+      .owl-carousel .item {
+        text-align: center;
+
+        padding: 30px 0;
+      }
+
+      /* Custom navigation button styles */
+      .nav-btn {
+        display: inline-flex;
+        justify-content: center;
+        position: absolute;
+        bottom: -10;
+        transform: translateY(-50%);
+        background-color: #fff;
+        color: #333;
+        width: 30px;
+        height: 30px;
+        gap: 20px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+        z-index: 1000; /* Ensure buttons are above the carousel items */
+      }
+
+      .prev-slide {
+        left: 10px; /* Adjust this value to position the button correctly */
+      }
+
+      .next-slide {
+        left: 50px; /* Adjust this value to position the button correctly, relative to the previous button */
+      }
+
+      /* Change the color of buttons on hover */
+      .nav-btn:hover {
+        background-color: #333;
+        color: #fff;
+      }
+      /* new  css*/
+      .bg-gray-100 {
+          background-color: #f3f3f3 !important;
+      }
+
+      .text-black {
+          color: black !important;
+      }
+
+      .text-white {
+          color: white !important;
+      }
+
+      .border-white {
+          border-color: white !important;
+      }
+
+      .border-black {
+          border-color: black !important;
+      }
+      /* new */
+
+      @media (max-width: 600px) {
+        #chart-container {
+          width: 100%;
+        }
+      }
+      @media (max-width: 300px) {
+        #chart-container {
+          width: 80%;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-[#EDEDED]">
+    <header class="h-screen bg-[#2042b6]">
+      <nav
+        class="navbar bg-[#2042b6] flex justify-between fixed w-full top-0 start-0 z-50 px-4 md:px-20 pt-3 pb-3"
+      >
+        <div class="flex items-center gap-1">
+          <img src="assets/icons/w.png" alt="" />
+          <p class="text-white text-4xl">
+            <span class="font-bold -mr-r-2">wp</span>pool
+          </p>
+        </div>
+        <div class="flex justify-between items-center gap-3">
+          <div class="border hidden lg:block px-4 py-2 rounded-full">
+            <!-- <img src="assets/icons/share.svg" alt="" /> -->
+            <i class="hidden lg:block  text-white font-light"><i class="fa-solid fa-share-nodes"></i></i>
+          </div>
+          <button
+            class="mr-3 hidden lg:block text-sm p-4 border rounded-[124px] text-white"
+          >
+            Download the 2024 Report
+          </button>
+          <div id="menu-icon">
+            <!-- <img src="assets/icons/menu.svg" alt="" /> -->
+            <i class="font-medium text-white"><i class="fa-solid fa-bars"></i></i>
+          </div>
+        </div>
+        <div
+          id="nav-menu"
+          class="hidden top-5 right-10 lg:right-28 bg-white p-5 shadow-lg z-50 w-96 h-[450px] absolute rounded-2xl"
+        >
+          <div class="flex gap-3 items-center mb-4">
+            <div class="bg-[#AFCD80] p-[14px] rounded-full">
+              <img src="assets/icons/share.svg" alt="" />
+            </div>
+          
+              <button>
+                <img src="./assets/icons/Frame 7.png" alt="">
+              </button>
+        
+            <button id="close-menu" class="text-4xl p-2">&times;</button>
+          </div>
+          <ul class="space-y-4">
+            <li><a href="#">The WPPOOL Index</a></li>
+            <li><a href="#">All Companies</a></li>
+            <li><a href="#">Potential Future Listings</a></li>
+            <li><a href="#">State of USA</a></li>
+            <li><a href="#">Stories & Ideas</a></li>
+            <li><a href="#">About WPPOOL</a></li>
+            <li><a href="#">WPPOOL Portfolio Companies</a></li>
+            <li><a href="#">Visit WPPOOL</a></li>
+          </ul>
+        </div>
+      </nav>
+      <!-- Banner Section -->
+      <div class="pt-[180px] hidden md:block">
+        <div class="flex items-center justify-center">
+          <div id="background-image" class="z-10 relative">
+            <div
+              class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-50"
+              style="background-image: url('path/to/your/image.jpg')"
+            ></div>
+            <div id="background-rectangle" class="relative">
+              <div
+                class="text-center text-white flex justify-center items-center h-full flex-col z-50 relative"
+              >
+                <h1 class="text-3xl md:text-7xl w-[688px]">The WPPOOL Index</h1>
+                <p class="w-full pt-2">
+                  Monitor the performance of emerging, publicly traded,
+                  financial technology companies
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Side Information Section -->
+        <div class="absolute top-0 left-0 px-8 py-[260px]">
+          <div class="pb-12">
+            <h1 class="text-4xl text-white">60</h1>
+            <p class="text-[#CDCDCD]">Companies</p>
+          </div>
+          <div class="pb-12">
+            <h1 class="text-4xl text-white">$100B</h1>
+            <p class="text-[#CDCDCD]">Market cap</p>
+          </div>
+          <div class="pb-12">
+            <h1 class="text-4xl text-white">3.5x</h1>
+            <p class="text-[#CDCDCD]">Revenue multiple</p>
+          </div>
+          <div class="pb-10">
+            <h1 class="text-4xl text-white">60%</h1>
+            <p class="text-[#CDCDCD]">LTM avg. revenue growth rate</p>
+          </div>
+        </div>
+
+        <!-- Scroll Down Button -->
+        <div class="absolute bottom-20 right-10">
+          <button class="p-4 bg-white rounded-full text-blue-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <!-- for mobile -->
+      <div class="pt-[180px] block md:hidden px-4">
+        <div class="pb-20">
+          <div
+            class="text-center text-white flex justify-center items-center flex-col"
+          >
+            <h1 class="text-3xl md:text-7xl w-full">The WPPOOL Index</h1>
+            <p class="w-full pt-2">
+              Monitor the performance of emerging, publicly traded, financial
+              technology companies
+            </p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="pb-12">
+            <h1 class="text-4xl text-white">60</h1>
+            <p class="text-[#CDCDCD]">Companies</p>
+          </div>
+          <div class="pb-12">
+            <h1 class="text-4xl text-white">$100B</h1>
+            <p class="text-[#CDCDCD]">Market cap</p>
+          </div>
+          <div class="pb-12">
+            <h1 class="text-4xl text-white">3.5x</h1>
+            <p class="text-[#CDCDCD]">Revenue multiple</p>
+          </div>
+          <div class="pb-10">
+            <h1 class="text-4xl text-white">60%</h1>
+            <p class="text-[#CDCDCD]">LTM avg. revenue growth rate</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="bg-[#EDEDED]">
+      <!-- WPPOOL Iindex -->
+      <section
+        class="max-w-6xl mx-auto bg-[#EDEDED] mt-16 px-4 sm:px-6 lg:px-8"
+      >
+        <div class="bg-white mb-10 px-6 py-5 rounded-xl">
+          <div>
+            <div class="tabs">
+              <ul>
+                <li class="active" onclick="showTab(0)">The Index</li>
+                <li onclick="showTab(1)">The Index Tab Two</li>
+                <li onclick="showTab(2)">The Index Tab Three</li>
+                <li onclick="showTab(3)">The Index Tab Four</li>
+              </ul>
+              <div class="tabs-content">
+                <div class="active">
+                  <div class="flex items-center gap-2 pb-3">
+                    <img src="assets/images/Union.svg" class="h-10" alt="" />
+                    <h1 class="text-2xl lg:text-4xl">The WPPOOL Index</h1>
+                  </div>
+                  <div>
+                    <!-- card 1 -->
+                    <div
+                      class="grid grid-cols-1 md:grid-cols-2 gap-y-4 lg:grid-cols-4 gap-x-5"
+                    >
+                      <div
+                        class="flex h-[50px] w-[230px] bg-[#F3F3F3] justify-between items-center px-[10px] rounded-md"
+                      >
+                        <h1 class="text-[#FC714D] text-3xl">+66.3%</h1>
+                        <p
+                          class="w-14 text-right text-xs border-r-4 pr-2 border-orange-500"
+                        >
+                          WPPOOL Index
+                        </p>
+                      </div>
+                      <div
+                        class="flex h-[50px] w-[230px] bg-[#F3F3F3] justify-between items-center px-[10px] rounded-md"
+                      >
+                        <h1 class="text-[#615DE3] text-3xl">+26.3%</h1>
+                        <p
+                          class="w-14 text-right text-xs border-r-4 pr-2 border-[#615DE3]"
+                        >
+                          Global Index
+                        </p>
+                      </div>
+                      <div
+                        class="flex h-[50px] w-[230px] bg-[#F3F3F3] justify-between items-center px-[10px] rounded-md"
+                      >
+                        <h1 class="text-[#7CA63A] text-3xl">+34.1%</h1>
+                        <p
+                          class="w-14 text-right text-xs border-r-4 pr-2 border-[#7CA63A]"
+                        >
+                          Microsoft
+                        </p>
+                      </div>
+                      <div
+                        class="flex h-[50px] w-[230px] bg-[#F3F3F3] justify-between items-center px-[10px] rounded-md"
+                      >
+                        <h1 class="text-[#6F34A1] text-3xl">+13%</h1>
+                        <p
+                          class="w-14 text-right text-xs border-r-4 pr-2 border-[#6F34A1]"
+                        >
+                          Twitter Index
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- button opton -->
+                  <div>
+                    <div
+                      class="flex flex-col md:flex-row lg:flex-row justify-center lg:justify-between pt-5"
+                    >
+                      <div class="py-5 md:py-0 lg:py-0">
+                        <select
+                          name=""
+                          id=""
+                          class="bg-[#2042B6] text-white text-xs w-[178px] py-[9px] my-2 lg:my-0 rounded-full px-2 mr-3"
+                        >
+                          <option value="s">Sectors</option>
+                          <option value="s">Sectors</option>
+                        </select>
+                        <select
+                          name=""
+                          id=""
+                          class="bg-[#2042B6] text-white text-xs w-[178px] py-[9px] rounded-full px-2"
+                        >
+                          <option value="s">Sectors</option>
+                          <option value="s">Sectors</option>
+                        </select>
+                      </div>
+                      <div
+                        class="bg-[#EFF3F6] flex items-center gap-5 h-[30px] w-[232px] rounded-[124px] px-3"
+                      >
+                        <p class="text-xs text-[#748DA1]">1Y</p>
+                        <p class="text-xs text-[#748DA1]">YTD</p>
+                        <p
+                          class="text-xs bg-[#2042B6] h-6 text-white inline-flex items-center rounded-[124px] px-2"
+                        >
+                          6M
+                        </p>
+                        <p class="text-xs text-[#748DA1]">1M</p>
+                        <p class="text-xs text-[#748DA1]">1W</p>
+                      </div>
+                    </div>
+                    <div></div>
+                  </div>
+                  <!-- chart -->
+
+                  <div>
+                    <div id="chart-container">
+                      <canvas id="myChart"></canvas>
+                    </div>
+                    <script>
+                      const ctx = document
+                        .getElementById("myChart")
+                        .getContext("2d");
+                      const myChart = new Chart(ctx, {
+                        type: "line",
+                        data: {
+                          labels: [
+                            "Jan",
+                            "Feb",
+                            "Mar",
+                            "Apr",
+                            "May",
+                            "Jun",
+                            "Jul",
+                          ],
+                          datasets: [
+                            {
+                              label: "WPPOOL",
+                              data: [-10, 40, 30, 40, 50, 60, 70],
+                              borderColor: "red",
+                              fill: false,
+                            },
+                            {
+                              label: "Google",
+                              data: [20, 30, 10, 90, 90, 60, 80],
+                              borderColor: "blue",
+                              fill: false,
+                            },
+                            {
+                              label: "Microsoft",
+                              data: [10, 40, 50, 90, 70, 70, 90],
+                              borderColor: "green",
+                              fill: false,
+                            },
+                            {
+                              label: "Twitter",
+                              data: [50, 10, 40, 30, 0, 70, 90],
+                              borderColor: "purple",
+                              fill: false,
+                            },
+                          ],
+                        },
+                        options: {
+                          responsive: true,
+                          plugins: {
+                            tooltip: {
+                              mode: "index",
+                              intersect: false,
+                            },
+                            title: {
+                              display: true,
+                              text: "Company Performance Over Time",
+                            },
+                          },
+                          hover: {
+                            mode: "nearest",
+                            intersect: true,
+                          },
+                          scales: {
+                            x: {
+                              display: true,
+                              title: {
+                                display: true,
+                                text: "Month",
+                              },
+                            },
+                            y: {
+                              display: true,
+                              title: {
+                                display: true,
+                                text: "Performance Index",
+                              },
+                            },
+                          },
+                        },
+                      });
+                    </script>
+                  </div>
+                </div>
+                <div>
+                  <h1>The Index Tab Two Content</h1>
+                </div>
+                <div>
+                  <h1>The Index Tab Three Content</h1>
+                </div>
+                <div>
+                  <h1>The Index Tab Four Content</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- All Companies -->
+      <section
+        class="max-w-6xl mx-auto bg-white rounded-[20px] px-4 sm:px-6 lg:px-8"
+      >
+        <div
+          class="mb-16 px-11 flex flex-col md:flex-row lg:justify-between pt-10"
+        >
+          <h1 class="text-2xl lg:text-5xl">All Compamies</h1>
+
+          <input
+            class="bg-[#EDEDED] text-black w-1/3 pl-10 rounded-lg"
+            type="search"
+            placeholder="Search Compaines"
+            name=""
+            id=""
+          />
+        </div>
+        <div class="px-11 overflow-x-auto">
+          <table class="min-w-full overflow-hidden">
+            <thead>
+              <tr>
+                <th
+                  scope="col"
+                  class="whitespace-nowrap px-2 py-3.5 text-left text-sm text-gray-900 font-bold"
+                >
+                  Company
+                </th>
+                <th
+                  scope="col"
+                  class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-normal bg-white text-gray-900 sm:pl-0"
+                >
+                  <select name="" id="" class="bg-white">
+                    <option value="ticker">Ticker</option>
+                  </select>
+                </th>
+                <th
+                  scope="col"
+                  class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-normal text-gray-900"
+                >
+                  Vertical
+                </th>
+                <th
+                  scope="col"
+                  class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-normal text-gray-900"
+                >
+                  Price
+                </th>
+                <th
+                  scope="col"
+                  class="whitespace-nowrap px-2 py-3.5 text-center text-sm font-normal text-gray-900"
+                >
+                  Market Cap ($B)
+                </th>
+                <th
+                  scope="col"
+                  class="whitespace-nowrap px-2 py-3.5 text-center text-sm font-normal text-gray-900"
+                >
+                  Revenue Growth
+                </th>
+                <th
+                  scope="col"
+                  class="whitespace-nowrap px-2 py-3.5 text-center text-sm font-normal text-gray-900"
+                >
+                  Gross Margin
+                </th>
+                <th
+                  scope="col"
+                  class="whitespace-nowrap px-2 py-3.5 text-center text-sm font-normal text-gray-900"
+                >
+                  EV/Revenue
+                </th>
+                <th
+                  scope="col"
+                  class="whitespace-nowrap px-2 py-3.5 text-center text-sm font-normal text-gray-900"
+                >
+                  YTD Performance
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white">
+              <tr class="bg-[#F3F3F3] rounded-md">
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900"
+                >
+                  Adyen
+                </td>
+                <td
+                  class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0"
+                >
+                  AFRM
+                </td>
+
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                  Payments
+                </td>
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                  $17.15
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  $50.5
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  49.0%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  15.8%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  6.3
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  24.3%
+                </td>
+              </tr>
+              <tr class="">
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900"
+                >
+                  Adyen
+                </td>
+                <td
+                  class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0"
+                >
+                  AFRM
+                </td>
+
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                  Payments
+                </td>
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                  $17.15
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  $50.5
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  49.0%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  15.8%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  6.3
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  24.3%
+                </td>
+              </tr>
+              <tr class="bg-[#F3F3F3] rounded-md">
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900"
+                >
+                  Adyen
+                </td>
+                <td
+                  class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0"
+                >
+                  AFRM
+                </td>
+
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                  Payments
+                </td>
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                  $17.15
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  $50.5
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  49.0%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  15.8%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  6.3
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  24.3%
+                </td>
+              </tr>
+              <tr class="">
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900"
+                >
+                  Adyen
+                </td>
+                <td
+                  class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0"
+                >
+                  AFRM
+                </td>
+
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                  Payments
+                </td>
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                  $17.15
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  $50.5
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  49.0%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  15.8%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  6.3
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  24.3%
+                </td>
+              </tr>
+              <tr class="bg-[#F3F3F3] rounded-md">
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900"
+                >
+                  Adyen
+                </td>
+                <td
+                  class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0"
+                >
+                  AFRM
+                </td>
+
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                  Payments
+                </td>
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                  $17.15
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  $50.5
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  49.0%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  15.8%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  6.3
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  24.3%
+                </td>
+              </tr>
+              <tr class="">
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900"
+                >
+                  Adyen
+                </td>
+                <td
+                  class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0"
+                >
+                  AFRM
+                </td>
+
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                  Payments
+                </td>
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                  $17.15
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  $50.5
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  49.0%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  15.8%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  6.3
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  24.3%
+                </td>
+              </tr>
+              <tr class="bg-[#F3F3F3] rounded-md">
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900"
+                >
+                  Adyen
+                </td>
+                <td
+                  class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0"
+                >
+                  AFRM
+                </td>
+
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                  Payments
+                </td>
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                  $17.15
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  $50.5
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  49.0%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  15.8%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  6.3
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  24.3%
+                </td>
+              </tr>
+              <tr class="">
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900"
+                >
+                  Adyen
+                </td>
+                <td
+                  class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0"
+                >
+                  AFRM
+                </td>
+
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                  Payments
+                </td>
+                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                  $17.15
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  $50.5
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  49.0%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  15.8%
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  6.3
+                </td>
+                <td
+                  class="whitespace-nowrap px-2 py-2 text-sm text-gray-500 text-center"
+                >
+                  24.3%
+                </td>
+              </tr>
+
+              <!-- More transactions... -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <div
+        class="max-w-6xl mx-auto flex flex-row items-center justify-center gap-3 mt-10"
+      >
+        <button
+          class="text-white bg-[#2042B6] p-[18px] rounded-full drop-shadow-2xl"
+        >
+          Download ‘All Companies’ Data
+        </button>
+        <button
+          class="text-white bg-[#2042B6] p-[18px] rounded-full drop-shadow-2xl"
+        >
+          View Methodology
+        </button>
+      </div>
+
+      <!-- State of USA -->
+      <section
+        class="max-w-6xl mx-auto pt-20 pb-0 lg:py-10 px-4 sm:px-6 lg:px-8"
+      >
+        <div class="text-center lg:text-start">
+          <h1 class="text-2xl lg:text-5xl">State of USA</h1>
+          <select
+            name=""
+            id=""
+            class="bg-[#2042B6] px-4 py-4 w-[200px] text-white rounded-full mt-5 text-24px lg:text-[42px]"
+          >
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+          </select>
+          <p class="mt-4 text-[#191618]">
+            Click through the slides or download the report to view natively on
+            your device.
+          </p>
+        </div>
+        <div>
+          <div id="owl-carousel" class="owl-carousel owl-theme">
+            <div class="item">
+              <img src="assets/images/image1.png" alt="" />
+            </div>
+            <div class="item">
+              <img src="assets/images/imaged.png" alt="" />
+            </div>
+            <div class="item">
+              <img src="assets/images/image1.png" alt="" />
+            </div>
+            <div class="item">
+              <img src="assets/images/imaged.png" alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stories & Ideas -->
+      <section class="max-w-6xl mx-auto pt-0 pb-20 lg:py-10 px-4">
+        <div class="pb-24 text-center lg:text-start">
+          <h1 class="text-2xl lg:text-5xl text-[#191618] pb-4">
+            Stories & Ideas
+          </h1>
+          <p class="text-xl text-[#191618]">The latest news and updates</p>
+        </div>
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-20 gap-x-20"
+        >
+          <!-- card 1 -->
+          <div
+            class="w-[23.75rem] h-[13.75rem] bg-white rounded-lg px-5 relative"
+          >
+            <img
+              class="absolute -top-12"
+              src="assets/images/user1.png"
+              alt=""
+            />
+
+            <div class="pt-20 px-4">
+              <h3 class="text-[#2042B6] text-sm">By: Sahabuddin Sagor</h3>
+              <p class="text-[#191618] pb-4">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
+                mollitia.
+              </p>
+              <button
+                class="bg-[#2042B6] text-white text-sm px-3 py-[10px] rounded-full"
+              >
+                Read More
+              </button>
+            </div>
+          </div>
+          <div
+            class="w-[23.75rem] h-[13.75rem] bg-white rounded-lg px-5 relative"
+          >
+            <img
+              class="absolute -top-12"
+              src="assets/images/user1.png"
+              alt=""
+            />
+
+            <div class="pt-20 px-4">
+              <h3 class="text-[#2042B6] text-sm">By: Sahabuddin Sagor</h3>
+              <p class="text-[#191618] pb-4">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
+                mollitia.
+              </p>
+              <button
+                class="bg-[#2042B6] text-white text-sm px-3 py-[10px] rounded-full"
+              >
+                Read More
+              </button>
+            </div>
+          </div>
+          <div
+            class="w-[23.75rem] h-[13.75rem] bg-white rounded-lg px-5 relative"
+          >
+            <img
+              class="absolute -top-12"
+              src="assets/images/user1.png"
+              alt=""
+            />
+
+            <div class="pt-20 px-4">
+              <h3 class="text-[#2042B6] text-sm">By: Sahabuddin Sagor</h3>
+              <p class="text-[#191618] pb-4">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
+                mollitia.
+              </p>
+              <button
+                class="bg-[#2042B6] text-white text-sm px-3 py-[10px] rounded-full"
+              >
+                Read More
+              </button>
+            </div>
+          </div>
+          <div
+            class="w-[23.75rem] h-[13.75rem] bg-white rounded-lg px-5 relative"
+          >
+            <img
+              class="absolute -top-12"
+              src="assets/images/user1.png"
+              alt=""
+            />
+
+            <div class="pt-20 px-4">
+              <h3 class="text-[#2042B6] text-sm">By: Sahabuddin Sagor</h3>
+              <p class="text-[#191618] pb-4">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
+                mollitia.
+              </p>
+              <button
+                class="bg-[#2042B6] text-white text-sm px-3 py-[10px] rounded-full"
+              >
+                Read More
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--Potential Future Listings  -->
+      <section
+        class="w-auto py-20 lg:py-10 lg:w-[73.75rem] mx-auto pb-14 sm:px-4"
+      >
+        <h1
+          class="text-center lg:text-start text-2xl lg:text-5xl text-[#191618] pb-6"
+        >
+          Potential Future Listings
+        </h1>
+        <p
+          class="text-center lg:text-start text-[#191618] leading-6 w-auto lg:w-[55rem] pb-6"
+        >
+          Porem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+          vulputate libero et velit interdum, ac aliquet odio mattis. Class
+          aptent taciti sociosqu ad litora torquent per conubia nostra, per
+          inceptos himenaeos.
+        </p>
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5 gap-x-5"
+        >
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/stripe.svg" alt="" />
+          </div>
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/klarna.svg" alt="" />
+          </div>
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/plaid.svg" alt="" />
+          </div>
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/checkout.svg" alt="" />
+          </div>
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/revolet.svg" alt="" />
+          </div>
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/chime.svg" alt="" />
+          </div>
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/n26.svg" alt="" />
+          </div>
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/brex.svg" alt="" />
+          </div>
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/deel.svg" alt="" />
+          </div>
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/gusto.svg" alt="" />
+          </div>
+        </div>
+      </section>
+      <!-- About WPPOOL section -->
+      <section
+        class="max-w-6xl mx-auto py-20 lg:py-10 bg-white rounded-xl px-4 sm:px-6 lg:px-8"
+      >
+        <div class="flex flex-col md:flex-row">
+          <div
+            class="px-3 text-center lg:text-start md:text-start lg:pl-[4.875rem] py-[4.875rem]"
+          >
+            <h1 class="text-2xl lg:text-5xl text-[#191618] pb-5">
+              About WPPOOL
+            </h1>
+            <h2 class="text-xl lg:text-3xl text-[#7D7F81] pb-4">
+              Investing in wppool for over 50 years
+            </h2>
+            <p
+              class="text-[#191618] leading-6 pb-7 w-auto md:w-[25.375rem] lg:w-[41.375rem] sm:pr-[4.875rem]"
+            >
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
+              mollitia,molestiae quas vel sint commodi repudiandae consequuntur
+              voluptatum laborumnumquam blanditiis harum quisquam eius sed odit
+              fugiat iusto fuga praesentiumoptio, eaque rerum! Provident
+              similique accusantium nemo autem.
+            </p>
+            <button class="text-white p-4 bg-[#2042B6] rounded-[124px]">
+              Contact WPPOOL
+            </button>
+          </div>
+          <div>
+            <img class="w-full h-full" src="assets/images/about.png" alt="" />
+          </div>
+        </div>
+      </section>
+      <!-- Selected WPPOOL Portfolio Companies -->
+      <section class="w-auto py-20 lg:py-10 lg:w-[73.75rem] mx-auto pb-14">
+        <h1
+          class="text-2xl md:text-2xl lg:text-5xl text-[#191618] text-center lg:text-start pb-12"
+        >
+          Selected WPPOOL Portfolio Companies
+        </h1>
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5">
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/alibaba.png" alt="" />
+          </div>
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/vendre.png" alt="" />
+          </div>
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/vestwell.png" alt="" />
+          </div>
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/snapdoc.png" alt="" />
+          </div>
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/snapdoc.png" alt="" />
+          </div>
+          <div
+            class="bg-white w-auto lg:w-[13.75rem] h-[7.5rem] rounded-md flex items-center justify-center"
+          >
+            <img src="assets/logo/toast.png" alt="" />
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="max-w-6xl mx-auto bg-[#E6E6E6] px-4 sm:px-6 lg:px-8">
+      <div
+        class="flex flex-col md:flex-row sm:gap-y-5 justify-between pt-20 px-5 lg:pl-12"
+      >
+        <div class="w-auto lg:w-[454px]">
+          <h1
+            class="text-2xl md:text-3xl text-center md:text-left lg:text-left"
+          >
+            Experience remarkable WordPress products with a new level of power,
+            beauty, and human-centered designs.
+          </h1>
+        </div>
+
+        <div class="flex gap-x-14 lg:gap-x-28 py-10 md:py-0 lg:py-1">
+          <div>
+            <p class="text-xl text-[#9FA0A1] font-bold pb-4">Jump to</p>
+            <ul>
+              <li class="pb-[10px]">
+                <a class="text-[#115cd9] text-xl" href="#"> About Us</a>
+              </li>
+              <li class="pb-[10px]">
+                <a class="text-[#115cd9] text-xl" href="#">Porfolio </a>
+              </li>
+              <li class="pb-[10px]">
+                <a class="text-[#115cd9] text-xl" href="#">News </a>
+              </li>
+              <li class="pb-[10px]">
+                <a class="text-[#115cd9] text-xl" href="#">Stories </a>
+              </li>
+              <li class="pb-[10px]">
+                <a class="text-[#115cd9] text-xl" href="#"> Jobs</a>
+              </li>
+              <li class="pb-[10px]">
+                <a class="text-[#115cd9] text-xl" href="#">Blogs </a>
+              </li>
+            </ul>
+          </div>
+          <div class="pr-20">
+            <div>
+              <h1 class="text-[#191618] text-xl font-bold pb-2">Cambridge</h1>
+              <p class="text-[#191618] text-xl">
+                70728 Yost Burg, <br />
+                North Magdaleneview, <br />
+                UT 97952-2814
+              </p>
+              <hr class="border-[#9FA0A1] mt-7 mb-6" />
+            </div>
+            <div>
+              <h1 class="text-[#191618] text-xl font-bold pb-2">London</h1>
+              <p class="text-[#191618] text-xl">
+                Suite 292 903 Stehr Streets, <br />
+                Langworthtown, SC 94577-9465
+              </p>
+              <hr class="border-[#9FA0A1] mt-7 mb-6" />
+            </div>
+            <div>
+              <h1 class="text-[#191618] text-xl font-bold pb-2">
+                San Francisco
+              </h1>
+              <p class="text-[#191618] text-xl">
+                19837 Gilberto Lodge, <br />
+                Lake Kendallville, <br />
+                Colorado - 97392, Bhutan
+              </p>
+              <hr class="border-[#9FA0A1] mt-7 mb-6" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-12 pb-20">
+        <div class="pb-5">
+          <ul class="flex gap-3 font-bold text-sm text-[#9FA0A1]">
+            <li>©2024</li>
+            <li>Terms of Use</li>
+            <li>Privacy Policy</li>
+          </ul>
+        </div>
+        <p
+          class="text-sm text-center md:text-start lg:text-start w-auto lg:w-[517px]"
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
+          mollitia,molestiae quas vel sint commodi repudiandae consequuntur
+          voluptatum laborum numquam blanditiis harum quisquam eius sed odit
+          fugiat iusto fuga praesentium optio, eaque rerum! Provident similique
+          accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut
+          molestias architecto voluptate aliquam nihil, eveniet aliquid culpa
+          officia aut! Impedit sit sunt quaera
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/script.js" defer></script>
+    <script src="js/nav.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+      integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const dots = [];
+      const numDots = 30;
+
+      function getRandomColor() {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      function createDots() {
+        for (let i = 0; i < numDots; i++) {
+          const dot = {
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            color: getRandomColor(),
+          };
+          dots.push(dot);
+
+          const div = document.createElement("div");
+          div.className = "dot";
+          div.style.left = dot.x + "px";
+          div.style.top = dot.y + "px";
+          div.style.backgroundColor = dot.color;
+          document.body.appendChild(div);
+        }
+      }
+
+      function drawLines() {
+        for (let i = 0; i < numDots; i++) {
+          for (let j = i + 1; j <script numDots; j++) {
+            ctx.beginPath();
+            ctx.moveTo(dots[i].x, dots[i].y);
+            ctx.lineTo(dots[j].x, dots[j].y);
+            ctx.strokeStyle = getRandomColor();
+            ctx.stroke();
+          }
+        }
+      }
+
+      createDots();
+      drawLines();
+</script>
+
+<!-- owl carosel js -->
+<script>
+      // end
+      $(document).ready(function () {
+        $(".owl-carousel").owlCarousel({
+          loop: true,
+          margin: 10,
+          nav: true,
+          navText: [
+            "<div class='nav-btn prev-slide'> < </div>",
+            "<div class='nav-btn next-slide'> > </div>",
+          ],
+          dots: false,
+          autoplay: true,
+          autoplayTimeout: 5000,
+          stagePadding: 0,
+          responsive: {
+            0: {
+              items: 1,
+              stagePadding: 0,
+            },
+            600: {
+              items: 1,
+              stagePadding: 0,
+            },
+            1000: {
+              items: 2,
+              stagePadding: 150,
+            },
+          },
+        });
+      });
+    </script>
+  </body>
+</html>
