@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WPPOOL Index</title>
-
+    <link rel="icon" type="image/x-icon" href="./assets/icons/w.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -133,23 +133,23 @@
       }
       /* new  css*/
       .bg-gray-100 {
-          background-color: #f3f3f3 !important;
+        background-color: #f3f3f3 !important;
       }
 
       .text-black {
-          color: black !important;
+        color: black !important;
       }
 
       .text-white {
-          color: white !important;
+        color: white !important;
       }
 
       .border-white {
-          border-color: white !important;
+        border-color: white !important;
       }
 
       .border-black {
-          border-color: black !important;
+        border-color: black !important;
       }
       /* new */
 
@@ -179,7 +179,9 @@
         <div class="flex justify-between items-center gap-3">
           <div class="border hidden lg:block px-4 py-2 rounded-full">
             <!-- <img src="assets/icons/share.svg" alt="" /> -->
-            <i class="hidden lg:block  text-white font-light"><i class="fa-solid fa-share-nodes"></i></i>
+            <i class="hidden lg:block text-white font-light"
+              ><i class="fa-solid fa-share-nodes"></i
+            ></i>
           </div>
           <button
             class="mr-3 hidden lg:block text-sm p-4 border rounded-[124px] text-white"
@@ -188,7 +190,9 @@
           </button>
           <div id="menu-icon">
             <!-- <img src="assets/icons/menu.svg" alt="" /> -->
-            <i class="font-medium text-white"><i class="fa-solid fa-bars"></i></i>
+            <i class="font-medium text-white"
+              ><i class="fa-solid fa-bars"></i
+            ></i>
           </div>
         </div>
         <div
@@ -199,21 +203,21 @@
             <div class="bg-[#AFCD80] p-[14px] rounded-full">
               <img src="assets/icons/share.svg" alt="" />
             </div>
-          
-              <button>
-                <img src="./assets/icons/Frame 7.png" alt="">
-              </button>
-        
+
+            <button>
+              <img src="./assets/icons/Frame 7.png" alt="" />
+            </button>
+
             <button id="close-menu" class="text-4xl p-2">&times;</button>
           </div>
           <ul class="space-y-4">
             <li><a href="#">The WPPOOL Index</a></li>
-            <li><a href="#">All Companies</a></li>
-            <li><a href="#">Potential Future Listings</a></li>
-            <li><a href="#">State of USA</a></li>
-            <li><a href="#">Stories & Ideas</a></li>
-            <li><a href="#">About WPPOOL</a></li>
-            <li><a href="#">WPPOOL Portfolio Companies</a></li>
+            <li><a href="#all_comanies">All Companies</a></li>
+            <li><a href="#Potential">Potential Future Listings</a></li>
+            <li><a href="#State">State of USA</a></li>
+            <li><a href="#Stories">Stories & Ideas</a></li>
+            <li><a href="#About">About WPPOOL</a></li>
+            <li><a href="#WPPOOL">WPPOOL Portfolio Companies</a></li>
             <li><a href="#">Visit WPPOOL</a></li>
           </ul>
         </div>
@@ -521,6 +525,7 @@
       </section>
       <!-- All Companies -->
       <section
+        id="all_comanies"
         class="max-w-6xl mx-auto bg-white rounded-[20px] px-4 sm:px-6 lg:px-8"
       >
         <div
@@ -974,6 +979,7 @@
 
       <!-- State of USA -->
       <section
+        id="State"
         class="max-w-6xl mx-auto pt-20 pb-0 lg:py-10 px-4 sm:px-6 lg:px-8"
       >
         <div class="text-center lg:text-start">
@@ -981,7 +987,7 @@
           <select
             name=""
             id=""
-            class="bg-[#2042B6] px-4 py-4 w-[200px] text-white rounded-full mt-5 text-24px lg:text-[42px]"
+            class="bg-[#2042B6] w-[200px] text-white rounded-full mt-5 text-[24px] lg:text-[42px]"
           >
             <option value="2024">2024</option>
             <option value="2023">2023</option>
@@ -1010,7 +1016,7 @@
       </section>
 
       <!-- Stories & Ideas -->
-      <section class="max-w-6xl mx-auto pt-0 pb-20 lg:py-10 px-4">
+      <section id="Stories" class="max-w-6xl mx-auto pt-0 pb-20 lg:py-10 px-4">
         <div class="pb-24 text-center lg:text-start">
           <h1 class="text-2xl lg:text-5xl text-[#191618] pb-4">
             Stories & Ideas
@@ -1113,6 +1119,7 @@
       </section>
       <!--Potential Future Listings  -->
       <section
+        id="Potential"
         class="w-auto py-20 lg:py-10 lg:w-[73.75rem] mx-auto pb-14 sm:px-4"
       >
         <h1
@@ -1185,6 +1192,7 @@
       </section>
       <!-- About WPPOOL section -->
       <section
+        id="About"
         class="max-w-6xl mx-auto py-20 lg:py-10 bg-white rounded-xl px-4 sm:px-6 lg:px-8"
       >
         <div class="flex flex-col md:flex-row">
@@ -1216,7 +1224,10 @@
         </div>
       </section>
       <!-- Selected WPPOOL Portfolio Companies -->
-      <section class="w-auto py-20 lg:py-10 lg:w-[73.75rem] mx-auto pb-14">
+      <section
+        id="WPPOOL"
+        class="w-auto py-20 lg:py-10 lg:w-[73.75rem] mx-auto pb-14"
+      >
         <h1
           class="text-2xl md:text-2xl lg:text-5xl text-[#191618] text-center lg:text-start pb-12"
         >
@@ -1414,10 +1425,10 @@
 
       createDots();
       drawLines();
-</script>
+    </script>
 
-<!-- owl carosel js -->
-<script>
+    <!-- owl carosel js -->
+    <script>
       // end
       $(document).ready(function () {
         $(".owl-carousel").owlCarousel({
